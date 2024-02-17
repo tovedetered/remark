@@ -51,11 +51,13 @@ void Lexer::skipComment() {
             nextChar();
         }
     }
+    skipWhitespace();
 }
 
 Token* Lexer::getToken() {
     skipWhitespace();
     skipComment();
+
     Token* token = nullptr;
     std::string strtoken(1, currentChar);
     switch (currentChar) {

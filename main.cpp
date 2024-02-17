@@ -5,7 +5,7 @@
 int main() {
     std::cout << "Hello, World!" << std::endl;
 
-    const std::string source = "+- # This is a comment!\n */";
+    const std::string source = "+- #aaa\n */";
     Lexer lex(source);
 
     const Token* token = lex.getToken();
