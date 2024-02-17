@@ -12,7 +12,7 @@ enum TokenType {
     newline = 0,
     number = 1,
     ident = 2,
-    LITSTR = 3,
+    strlit = 3,
 
     //----- Keywords -----\\
 
