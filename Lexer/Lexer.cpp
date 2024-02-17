@@ -51,14 +51,19 @@ void Lexer::skipComment() {
             nextChar();
         }
     }
+    skipWhitespace();
 }
 
 Token* Lexer::getToken() {
     skipWhitespace();
     skipComment();
+
     Token* token = nullptr;
     std::string strtoken(1, currentChar);
-    switch (currentChar) {
+    char switchChar = currentChar;
+    if(std::isdigit(currentChar)) switchChar = '7'; // to do numbers and digits in a switch
+
+    switch (switchChar) {
     case '+':
         token = new Token(strtoken, PLUS);
         break;
@@ -111,6 +116,49 @@ Token* Lexer::getToken() {
             abort("Expected !=, got !" + peek());
         }
         break;
+    case '\"': {
+        nextChar();
+        const int startPos = currentPos;
+        int length = 1;
+        //For now just using c's printf to print so no special characters are allowed
+        while(currentChar != '\"') {
+            if(currentChar == '\r' || currentChar == '\n' || currentChar == '\t' || currentChar == '\\' || currentChar == '%') {
+                abort("Illegal Character in string! ");
+            }
+            nextChar();
+            length ++;
+        }
+        std::string tokenText = source.substr(startPos, length);
+        token = new Token(tokenText, strlit);
+        break;
+    }
+    case '7': {
+        //if there is a digit has to be a number, so get all consec digits and decimal if there is one
+        int startPos = currentPos;
+        int length = 1;
+        while(std::isdigit(peek())) {
+            nextChar();
+            length++;
+        }
+        //if decimal
+        if(peek() == '.') {
+            nextChar();
+            length++;
+            //have to have a digit after TODO: Add f for floating points
+            if(!std::isdigit(peek())) {
+                //Error Here
+                abort("Illegal Character in Number ");
+            }
+            while(std::isdigit(peek())) {
+                nextChar();
+                length++;
+            }
+        }
+
+        std::string tokenText = source.substr(startPos, length);
+        token = new Token(tokenText, number);
+        break;
+    }
     case '\0':
         token = new Token(strtoken, eof);
         break;
