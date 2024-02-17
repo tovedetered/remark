@@ -1,0 +1,9 @@
+# ninja log v5
+3	904	1708178509216140292	CMakeFiles/remark.dir/Lexer.cpp.o	5645dcd4d8b8ffc1
+3	805	1708176780296763863	CMakeFiles/remark.dir/Token.cpp.o	173caf68fefadce8
+905	1014	1708178509324144971	remark	bc91ea85fb24dfc5
+2	821	1708178509132136653	CMakeFiles/remark.dir/main.cpp.o	ed6ae905ae4561f2
+2	805	1708178915985794413	CMakeFiles/remark.dir/Lexer/Token.cpp.o	c249234a843107de
+1	855	1708178916033796499	CMakeFiles/remark.dir/main.cpp.o	ed6ae905ae4561f2
+1	1045	1708178916225804845	CMakeFiles/remark.dir/Lexer/Lexer.cpp.o	2139bb322e1f03a5
+1045	1152	1708178916329809366	remark	f8cb0e3c959415c0
