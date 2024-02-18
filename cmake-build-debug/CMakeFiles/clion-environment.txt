@@ -1,5 +1,4 @@
-ToolSet: 11.0 w64 (local)@D:\Clion\CLion Nova 2\bin\mingw
-Ninja: 1.11.1@D:\Clion\CLion Nova 2\bin\ninja\win\x64\ninja.exe
+ToolSet: 1.0 (local)Ninja: 1.11.1@/home/tobedetered/.local/share/JetBrains/Toolbox/apps/clion-nova/bin/ninja/linux/x64/ninja
 Options: 
 
-Options:
+Options:-DCMAKE_MAKE_PROGRAM=/home/tobedetered/.local/share/JetBrains/Toolbox/apps/clion-nova/bin/ninja/linux/x64/ninja

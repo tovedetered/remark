@@ -6,7 +6,6 @@
 #define TOKEN_H
 
 #include <string>
-#include "Token.h"
 #include "TokenType.h"
 
 class Token {

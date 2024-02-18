@@ -1,7 +1,7 @@
 //
 // Created by tobedetered on 2/17/24.
 //
-
+#pragma once
 #ifndef TOKENTYPE_H
 #define TOKENTYPE_H
 
@@ -31,6 +31,7 @@ enum TokenType {
     END = 109,
     STRTMOD = 110,
     ENDMOD = 111,
+    ENDLNE = 112,
 
     WHILE = 120,
     REPEAT = 121,

@@ -5,13 +5,26 @@
 #include "Lexer.h"
 
 #include <cstring>
+#include <fstream>
 #include <iostream>
+#include <boost/archive/text_iarchive.hpp>
 
 Lexer::Lexer(std::string source) {
+    keyident = new KeywordIdentifier;
+    {
+        std::ifstream ifs("/home/tobedetered/CLionProjects/remark/resources/keyword_ident.txt");
+        boost::archive::text_iarchive ia(ifs);
+        ia >> *keyident;
+        ifs.close();
+    }
     this->source = std::move(source);
     this->currentChar = ' ';
     this->currentPos = -1;
     nextChar();
+}
+
+Lexer::~Lexer() {
+    delete keyident;
 }
 
 void Lexer::nextChar() {
@@ -62,6 +75,7 @@ Token* Lexer::getToken() {
     std::string strtoken(1, currentChar);
     char switchChar = currentChar;
     if(std::isdigit(currentChar)) switchChar = '7'; // to do numbers and digits in a switch
+    else if(std::isalnum(currentChar)) switchChar = 'z'; //to do keywords
 
     switch (switchChar) {
     case '+':
@@ -157,6 +171,21 @@ Token* Lexer::getToken() {
 
         std::string tokenText = source.substr(startPos, length);
         token = new Token(tokenText, number);
+        break;
+    }
+    case 'z': {
+        const int startPos = currentPos;
+        int length = 0;
+        while(std::isalpha(currentChar)) {
+            nextChar();
+            length++;
+        }
+
+        //Check if token is in list of keywords
+        const std::string tokenText = source.substr(startPos, length);
+        const TokenType keyword = keyident->getKeyword(tokenText);
+        token = new Token(tokenText, keyword);
+        currentPos --;
         break;
     }
     case '\0':

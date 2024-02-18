@@ -1,9 +1,11 @@
 # ninja log v5
-3	904	1708178509216140292	CMakeFiles/remark.dir/Lexer.cpp.o	5645dcd4d8b8ffc1
-3	805	1708176780296763863	CMakeFiles/remark.dir/Token.cpp.o	173caf68fefadce8
-905	1014	1708178509324144971	remark	bc91ea85fb24dfc5
-2	821	1708178509132136653	CMakeFiles/remark.dir/main.cpp.o	ed6ae905ae4561f2
-2	805	1708178915985794413	CMakeFiles/remark.dir/Lexer/Token.cpp.o	c249234a843107de
-1	855	1708178916033796499	CMakeFiles/remark.dir/main.cpp.o	ed6ae905ae4561f2
-1	1045	1708178916225804845	CMakeFiles/remark.dir/Lexer/Lexer.cpp.o	2139bb322e1f03a5
-1045	1152	1708178916329809366	remark	f8cb0e3c959415c0
+7	2298	1708276736513951291	CMakeFiles/remark.dir/Lexer/Lexer.cpp.o	907e40847cab66c8
+5	660	1708276569634806410	CMakeFiles/remark.dir/Lexer/Token.cpp.o	a94e9be83af2e60e
+2	41	1708277511815301139	build.ninja	eb79d72c15637cfa
+2298	2423	1708276736641956778	remark	c7ebb461d1afbce7
+4	2132	1708276571106869347	CMakeFiles/remark.dir/main.cpp.o	6ae9e71efcb87c00
+12	1203	1708277538840466079	CMakeFiles/remark.dir/Lexer/Token.cpp.o	a94e9be83af2e60e
+1203	1260	1708277538900468667	CMakeFiles/remark.dir/Parser/Parser.cpp.o	78baf4b3243bdfe5
+8	3480	1708277541116564197	CMakeFiles/remark.dir/Lexer/Lexer.cpp.o	907e40847cab66c8
+7	3504	1708277541140565231	CMakeFiles/remark.dir/main.cpp.o	6ae9e71efcb87c00
+3504	3657	1708277541296571957	remark	201cd1d53d8f7afb

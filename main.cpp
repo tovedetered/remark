@@ -1,19 +1,28 @@
 #include <iostream>
+#include <fstream>
 
+#include "Lexer/KeywordIdentifier.h"
 #include "Lexer/Lexer.h"
+#include "Parser/Parser.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    std::cout << "***** Remarkable Compiler *****" << std::endl;
+    std::string filepath;
+    std::cin >> filepath;
 
-    const std::string source = "+-123 9.8654*/";
-    Lexer lex(source);
+    std::ifstream inputFile(filepath);
 
-    const Token* token = lex.getToken();
-    while(token->getToken() != eof) {
-        std::cout << token->getToken() << std::endl;
-        delete token;
-        token = lex.getToken();
+    /*Save Keyword Identifier
+    {
+        std::ofstream ofs("/home/tobedetered/CLionProjects/remark/resources/keyword_ident.txt");
+        KeywordIdentifier ident;
+        ident.init();
+        boost::archive::text_oarchive oa(ofs);
+        oa << ident;
+
+        ofs.close();
     }
+    */
 
     return 0;
 }

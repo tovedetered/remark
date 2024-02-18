@@ -6,12 +6,14 @@
 #define LEXER_H
 #include <string>
 
+#include "KeywordIdentifier.h"
 #include "Token.h"
 
 
 class Lexer {
 public:
     explicit Lexer(std::string source);
+    ~Lexer();
     void nextChar();
     [[nodiscard]] char peek() const;
     [[nodiscard]] char getCurrentChar() const;
@@ -23,6 +25,7 @@ private:
     std::string source;
     char currentChar{};
     int currentPos;
+    KeywordIdentifier* keyident;
 };
 
 

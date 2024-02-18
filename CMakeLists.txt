@@ -1,11 +1,26 @@
-cmake_minimum_required(VERSION 3.28)
+cmake_minimum_required(VERSION 3.22.x)
 project(remark)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(remark main.cpp
-        Lexer/Lexer.cpp
-        Lexer/Lexer.h
-        Lexer/Token.cpp
-        Lexer/Token.h
-        Lexer/TokenType.h)
+find_package(Boost 1.74.0 COMPONENTS serialization)
+
+if(Boost_FOUND)
+        include_directories(${Boost_INCLUDE_DIRS})
+        add_executable(remark
+                main.cpp
+                Lexer/KeywordIdentifier.h
+                Lexer/Lexer.cpp
+                Lexer/Lexer.h
+                Lexer/Token.cpp
+                Lexer/Token.h
+                Lexer/TokenType.h
+                Parser/Parser.cpp
+                Parser/Parser.h
+        )
+        target_link_libraries(remark ${Boost_LIBRARIES})
+endif()
+
+
+
+
