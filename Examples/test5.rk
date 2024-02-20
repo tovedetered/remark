@@ -1,0 +1,13 @@
+prnt "How many fibbonachi numbers do you want?";
+inpt nums;
+prnt " ";
+
+let a = 0;
+let b = 1;
+while nums > 0 {
+    prnt a;
+    let c = a + b;
+    let a = b;
+    let b = c;
+    let nums = nums -1;
+};

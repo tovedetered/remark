@@ -5,6 +5,7 @@
 #ifndef PARSER_H
 #define PARSER_H
 #include <iostream>
+#include <unordered_set>
 
 #include "../Lexer/Lexer.h"
 
@@ -24,13 +25,22 @@ public:
     }
 
     void program();
+    [[nodiscard]] bool isComparisonOperator() const;
     void statement();
+    void comparison();
     void expression();
+    void term();
+    void unary();
+    void primary();
     void endLine();
 private:
     Token* currentToken;
     Token* peekToken;
     Lexer* lex;
+
+    std::unordered_set<std::string> symbolSet; //Vairables
+    std::unordered_set<std::string> labels;
+    std::unordered_set<std::string> labelsGoneTo;
 };
 
 

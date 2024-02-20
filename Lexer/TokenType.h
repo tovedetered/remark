@@ -32,9 +32,11 @@ enum TokenType {
     STRTMOD = 110,
     ENDMOD = 111,
     ENDLNE = 112,
+    ENDIF = 113,
 
     WHILE = 120,
     REPEAT = 121,
+    ENDWHILE = 122,
 
     //----- Types -----\\
 

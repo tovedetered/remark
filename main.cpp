@@ -11,7 +11,7 @@ int main() {
     std::string filepath;
     std::cin >> filepath;
 
-    /*Save Keyword Identifier*/
+    /*Save Keyword Identifier
     {
         std::ofstream ofs("/home/tobedetered/CLionProjects/remark/resources/keyword_ident.txt");
         KeywordIdentifier ident;
@@ -20,7 +20,7 @@ int main() {
         oa << ident;
 
         ofs.close();
-    }
+    }*/
 
 
     std::string source;

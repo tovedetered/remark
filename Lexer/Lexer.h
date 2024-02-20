@@ -22,6 +22,8 @@ public:
     void skipComment();
     Token* getToken();
 private:
+    bool startWhile;
+    bool startIf;
     std::string source;
     char currentChar{};
     int currentPos;

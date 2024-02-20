@@ -1,0 +1,6 @@
+let foo = bar*3 + 2;
+if foo > 0 {
+    if 10*10 < 100 {
+        prnt bar;
+    };
+};

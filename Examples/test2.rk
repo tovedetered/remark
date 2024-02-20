@@ -1,0 +1,3 @@
+lbl loop;
+prnt "hello, world";
+goto loop;

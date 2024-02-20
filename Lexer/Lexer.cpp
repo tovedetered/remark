@@ -21,6 +21,9 @@ Lexer::Lexer(std::string source) {
     this->currentChar = ' ';
     this->currentPos = -1;
     nextChar();
+
+    startIf = false;
+    startWhile = false;
 }
 
 Lexer::~Lexer() {
@@ -184,12 +187,24 @@ Token* Lexer::getToken() {
         //Check if token is in list of keywords
         const std::string tokenText = source.substr(startPos, length);
         const TokenType keyword = keyident->getKeyword(tokenText);
+        if(keyword == IF) {
+            startIf = true;
+        }
+        else if(keyword == WHILE) {
+            startWhile = true;
+        }
         token = new Token(tokenText, keyword);
         currentPos --;
         break;
     }
     case ';':
         token = new Token(strtoken, ENDLNE);
+        break;
+    case '{':
+        token = new Token(strtoken, BEGIN);
+        break;
+    case '}':
+        token = new Token(strtoken, END);
         break;
     case '\0':
         token = new Token(strtoken, eof);
