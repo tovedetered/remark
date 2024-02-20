@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 
 #include "Lexer/KeywordIdentifier.h"
 #include "Lexer/Lexer.h"
@@ -10,9 +11,7 @@ int main() {
     std::string filepath;
     std::cin >> filepath;
 
-    std::ifstream inputFile(filepath);
-
-    /*Save Keyword Identifier
+    /*Save Keyword Identifier*/
     {
         std::ofstream ofs("/home/tobedetered/CLionProjects/remark/resources/keyword_ident.txt");
         KeywordIdentifier ident;
@@ -22,7 +21,30 @@ int main() {
 
         ofs.close();
     }
-    */
+
+
+    std::string source;
+    std::string readFile(std::filesystem::path path);
+    std::ifstream inputFile(filepath, std::ios::in);
+    if(inputFile.is_open()) {
+        namespace fs = std::filesystem;
+        const auto size = fs::file_size(filepath);
+        std::string result(size, '\0');
+        inputFile.read(&result[0], static_cast<long>(size));
+        source = result;
+    }
+    else {
+        std::cerr << "Invalid Filepath: " << filepath << std::endl;
+        inputFile.close();
+        exit(-1);
+    }
+    inputFile.close();
+
+    Lexer lex(source);
+    Parser pars(&lex);
+
+    pars.program();
+    std::cout << "Parsing Completed!" << std::endl;
 
     return 0;
 }

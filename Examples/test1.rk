@@ -1,0 +1,3 @@
+prnt "hello, world";
+prnt "second line"!
+prnt "third line";

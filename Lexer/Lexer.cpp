@@ -127,7 +127,7 @@ Token* Lexer::getToken() {
             token = new Token(std::string() + lastChar + currentChar, NOTEQ);
         }
         else {
-            abort("Expected !=, got !" + peek());
+            token = new Token(std::string() + currentChar, ENDLNE);
         }
         break;
     case '\"': {
@@ -188,6 +188,9 @@ Token* Lexer::getToken() {
         currentPos --;
         break;
     }
+    case ';':
+        token = new Token(strtoken, ENDLNE);
+        break;
     case '\0':
         token = new Token(strtoken, eof);
         break;
