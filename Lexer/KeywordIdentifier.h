@@ -39,7 +39,9 @@ inline void KeywordIdentifier::init() {
     keywordMap.emplace("lbl", LBL);
     keywordMap.emplace("goto", GOTO);
     keywordMap.emplace("prnt", PRNT);
+    keywordMap.emplace("print", PRNT);
     keywordMap.emplace("inpt", INPT);
+    keywordMap.emplace("input", INPT);
     keywordMap.emplace("let", LET);
     keywordMap.emplace("if", IF);
     keywordMap.emplace("then", THEN);

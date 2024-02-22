@@ -12,16 +12,16 @@ int main() {
     std::string filepath;
     std::cin >> filepath;
 
-    /*Save Keyword Identifier
+    /*Save Keyword Identifier*/
     {
-        std::ofstream ofs("/home/tobedetered/CLionProjects/remark/resources/keyword_ident.txt");
+        std::ofstream ofs("keyword_ident.txt");
         KeywordIdentifier ident;
         ident.init();
         boost::archive::text_oarchive oa(ofs);
         oa << ident;
 
         ofs.close();
-    }*/
+    }
 
 
     std::string source;
@@ -42,7 +42,7 @@ int main() {
     inputFile.close();
 
     Lexer lex(source);
-    Emitter emitter("../CompiledExamples/out.c");
+    Emitter emitter("out.c");
     Parser pars(&lex, &emitter);
 
     pars.program();
