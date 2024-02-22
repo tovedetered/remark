@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/remark.dir/main.cpp.o CMakeFiles/remark.dir/Lexer/Lexer.cpp.o CMakeFiles/remark.dir/Lexer/Token.cpp.o -o remark  -Wl,-rpath,/usr/local/lib /usr/local/lib/libboost_serialization.so.1.82.0 
