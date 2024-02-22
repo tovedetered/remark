@@ -14,7 +14,7 @@ int main() {
 
     /*Save Keyword Identifier*/
     {
-        std::ofstream ofs("keyword_ident.txt");
+        std::ofstream ofs("../resources/keyword_ident.txt");
         KeywordIdentifier ident;
         ident.init();
         boost::archive::text_oarchive oa(ofs);

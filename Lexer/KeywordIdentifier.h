@@ -38,19 +38,28 @@ inline void KeywordIdentifier::init() {
     // Initialze keywords
     keywordMap.emplace("lbl", LBL);
     keywordMap.emplace("goto", GOTO);
+
     keywordMap.emplace("prnt", PRNT);
     keywordMap.emplace("print", PRNT);
     keywordMap.emplace("inpt", INPT);
     keywordMap.emplace("input", INPT);
+
     keywordMap.emplace("let", LET);
+
     keywordMap.emplace("if", IF);
+    keywordMap.emplace("else", ELSE);
+    keywordMap.emplace("elseif", ELSEIF);
+    keywordMap.emplace("elsif", ELSEIF);
     keywordMap.emplace("then", THEN);
+
     keywordMap.emplace("begin", BEGIN);
     keywordMap.emplace("end", END);
     keywordMap.emplace("strtmod", STRTMOD);
     keywordMap.emplace("endmod", ENDMOD);
+
     keywordMap.emplace("while", WHILE);
     keywordMap.emplace("repeat", REPEAT);
+
     keywordMap.emplace(";", ENDLNE);
     keywordMap.emplace("!", ENDLNE);
 

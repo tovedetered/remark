@@ -5,8 +5,6 @@
 #ifndef TOKENTYPE_H
 #define TOKENTYPE_H
 
-#endif //TOKENTYPE_H
-
 enum TokenType {
     eof = - 1,
     newline = 0,
@@ -26,6 +24,8 @@ enum TokenType {
 
     IF = 106,
     THEN = 107,
+    ELSE = 114,
+    ELSEIF = 115,
 
     BEGIN = 108,
     END = 109,
@@ -59,3 +59,5 @@ enum TokenType {
     GT = 210,
     GTEQ = 211,
 };
+
+#endif //TOKENTYPE_H

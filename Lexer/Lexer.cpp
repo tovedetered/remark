@@ -12,7 +12,7 @@
 Lexer::Lexer(std::string source) {
     keyident = new KeywordIdentifier;
     {
-        std::ifstream ifs("keyword_ident.txt");
+        std::ifstream ifs("../resources/keyword_ident.txt");
         boost::archive::text_iarchive ia(ifs);
         ia >> *keyident;
         ifs.close();
