@@ -63,6 +63,9 @@ inline void KeywordIdentifier::init() {
     keywordMap.emplace(";", ENDLNE);
     keywordMap.emplace("!", ENDLNE);
 
+    keywordMap.emplace("(", STRTMOD);
+    keywordMap.emplace(")", ENDMOD);
+
     // Initialize Types
     keywordMap.emplace("int", INT);
     keywordMap.emplace("char", CHAR);

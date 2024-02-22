@@ -88,9 +88,11 @@ void Parser::statement() {
     case IF:
         //"IF" comparison "BEGIN" {statement} "END"
         nextToken();
+        //Compiler will accept if i > 1 , if(i>1) , if (i>1), etc.
+        if(currentToken->getToken() == STRTMOD) nextToken();
         emit->emit("if(");
         comparison();
-
+        if(currentToken->getToken() == ENDMOD) nextToken();
         match(BEGIN);
         emit->emitLine("){");
         while(!checkToken(END)) {
@@ -99,6 +101,7 @@ void Parser::statement() {
         match(END);
         emit->emitLine("}");
         nextToken();
+
         ELSECHAIN:
         if(currentToken->getToken() == ELSE) {
             nextToken();
@@ -112,9 +115,10 @@ void Parser::statement() {
         }
         else if(currentToken->getToken() == ELSEIF) {
             nextToken();
+            if(currentToken->getToken() == STRTMOD) nextToken();
             emit->emit("else if(");
             comparison();
-
+            if(currentToken->getToken() == ENDMOD) nextToken();
             match(BEGIN);
             emit->emitLine("){");
             while(!checkToken(END)) {
@@ -131,9 +135,10 @@ void Parser::statement() {
     case WHILE:
         //"WHILE" comparison "BEGIN" "ENDLNE" {statement} ("END" | "ENDLNE") "ENDLNE"
         nextToken();
+        if(currentToken->getToken() == STRTMOD) nextToken();
         emit->emit("while(");
         comparison();
-
+        if(currentToken->getToken() == ENDMOD) nextToken();
         match(BEGIN);
         emit->emitLine("){");
         while(!checkToken(END)) {

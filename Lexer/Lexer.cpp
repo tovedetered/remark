@@ -5,14 +5,18 @@
 #include "Lexer.h"
 
 #include <cstring>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <boost/dll/runtime_symbol_info.hpp>
 #include <boost/archive/text_iarchive.hpp>
 
 Lexer::Lexer(std::string source) {
     keyident = new KeywordIdentifier;
     {
-        std::ifstream ifs("../resources/keyword_ident.txt");
+        std::string executable_path = boost::dll::program_location().parent_path().parent_path().string();
+        std::cerr << executable_path << std::endl;
+        std::ifstream ifs(executable_path + "/resources/keyword_ident.txt");
         boost::archive::text_iarchive ia(ifs);
         ia >> *keyident;
         ifs.close();

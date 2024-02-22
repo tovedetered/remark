@@ -1,19 +1,41 @@
+#include <complex>
 #include <iostream>
 #include <fstream>
 #include <filesystem>
+#include "Dependencies/cxxopts.hpp"
 
 #include "Emitter/Emitter.h"
 #include "Lexer/KeywordIdentifier.h"
 #include "Lexer/Lexer.h"
 #include "Parser/Parser.h"
 
-int main() {
-    std::cout << "***** Remarkable Compiler *****" << std::endl;
-    std::cout << "Please enter the path to the file you would like to compile!" << std::endl;
-    std::string filepath;
-    std::cin >> filepath;
+int main(int argc, char** argv) {
 
-    /*Save Keyword Identifier*/
+    cxxopts::Options options("Remark", "A compiler for the Remark Programming Language");
+
+    options.add_options()
+        ("o,output_name", "Output Name", cxxopts::value<std::string>())
+        ("f,file", "File To Compile", cxxopts::value<std::string>());
+
+    auto result = options.parse(argc, argv);
+    std::string filepath;
+    if(result.count("file")) {
+        filepath = result["file"].as<std::string>();
+    }
+    else {
+        std::cerr << "ERROR: No filepath inputted! please use -f {file-path}" << std::endl;
+    }
+    std::string outFile;
+    if(result.count("output_name")) {
+        outFile = result["output_name"].as<std::string>();
+    }
+    else {
+        outFile = "out.c";
+    }
+
+    std::cout << "***** Remarkable Compiler *****" << std::endl;
+
+    /*Save Keyword Identifier
     {
         std::ofstream ofs("../resources/keyword_ident.txt");
         KeywordIdentifier ident;
@@ -23,6 +45,7 @@ int main() {
 
         ofs.close();
     }
+    */
 
 
     std::string source;
@@ -31,9 +54,9 @@ int main() {
     if(inputFile.is_open()) {
         namespace fs = std::filesystem;
         const auto size = fs::file_size(filepath);
-        std::string result(size, '\0');
-        inputFile.read(&result[0], static_cast<long>(size));
-        source = result;
+        std::string outcome(size, '\0');
+        inputFile.read(&outcome[0], static_cast<long>(size));
+        source = outcome;
     }
     else {
         std::cerr << "Invalid Filepath: " << filepath << std::endl;
@@ -42,9 +65,7 @@ int main() {
     }
     inputFile.close();
 
-    std::string outFile;
-    std::cout << "Please enter the output path and filename for your compiled program!" << std::endl;
-    std::cin >> outFile;
+
     if(outFile == "pDir") {
         outFile = "out.c";
     }
