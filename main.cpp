@@ -2,6 +2,7 @@
 #include <fstream>
 #include <filesystem>
 
+#include "Emitter/Emitter.h"
 #include "Lexer/KeywordIdentifier.h"
 #include "Lexer/Lexer.h"
 #include "Parser/Parser.h"
@@ -41,10 +42,12 @@ int main() {
     inputFile.close();
 
     Lexer lex(source);
-    Parser pars(&lex);
+    Emitter emitter("../CompiledExamples/out.c");
+    Parser pars(&lex, &emitter);
 
     pars.program();
-    std::cout << "Parsing Completed!" << std::endl;
+    emitter.writeFile();
+    std::cout << "Compiling Completed!" << std::endl;
 
     return 0;
 }

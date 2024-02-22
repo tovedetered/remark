@@ -4,8 +4,9 @@
 
 #include "Parser.h"
 
-Parser::Parser(Lexer* lex) {
+Parser::Parser(Lexer* lex, Emitter* emit) {
     this->lex = lex;
+    this->emit = emit;
 
     currentToken = nullptr;
     peekToken = nullptr;
@@ -15,7 +16,7 @@ Parser::Parser(Lexer* lex) {
 }
 
 Parser::~Parser() {
-    //NOTE we do not delete Lexer becasue it is stack allocated
+    //NOTE we do not delete Lexer or emitter becasue they are stack allocated
 }
 
 bool Parser::checkToken(const TokenType token) const {
@@ -43,6 +44,9 @@ void Parser::nextToken() {
 void Parser::program() {
     std::cout << "PROGRAM" << std::endl;
 
+    emit->headerLine("#include <stdio.h>");
+    emit->headerLine("int main(void){");
+
     while(checkToken(ENDLNE)) {
         nextToken();
     }
@@ -50,6 +54,9 @@ void Parser::program() {
     while(!checkToken(eof)) {
         statement();
     }
+
+    emit->emitLine("return 0;");
+    emit->emitLine("}");
 
     for(const auto& label : labelsGoneTo) {
         if(!labels.contains(label)) {
@@ -70,36 +77,45 @@ void Parser::statement() {
         nextToken();
         if(checkToken(strlit)) {
             //Simple String
+            emit->emitLine("printf(\"" + currentToken->getText() + "\\n\");");
             nextToken();
         }
         else {
             //expect expression
+            emit->emitLine(std::string() + "printf(\"%" + ".2f\\n\", (float)(");
             expression();
+            emit->emitLine("));");
         }
         break;
     case IF:
         //"IF" comparison "BEGIN" {statement} "END"
         std::cout << "STATEMENT: IF" << std::endl;
         nextToken();
+        emit->emit("if(");
         comparison();
 
         match(BEGIN);
+        emit->emitLine("){");
         while(!checkToken(END)) {
             statement();
         }
         match(END);
+        emit->emitLine("}");
         break;
     case WHILE:
         //"WHILE" comparison "BEGIN" "ENDLNE" {statement} ("END" | "ENDLNE") "ENDLNE"
         std::cout << "STATEMENT: WHILE" << std::endl;
         nextToken();
+        emit->emit("while(");
         comparison();
 
         match(BEGIN);
+        emit->emitLine("){");
         while(!checkToken(END)) {
             statement();
         }
         match(END);
+        emit->emitLine("}");
         break;
     case LBL:
         //lbl ident
@@ -109,6 +125,7 @@ void Parser::statement() {
             abort("Label already exists: " + currentToken->getText());
         }
         labels.emplace(currentToken->getText());
+        emit->emitLine(currentToken->getText() + ":");
         match(ident);
         break;
     case GOTO:
@@ -116,6 +133,7 @@ void Parser::statement() {
         std::cout << "Statement: GOTO" << std::endl;
         nextToken();
         labelsGoneTo.emplace(currentToken->getText());
+        emit->emitLine("goto " + currentToken->getText() + ";");
         match(ident);
         break;
     case LET:
@@ -123,17 +141,27 @@ void Parser::statement() {
         nextToken();
         if(!symbolSet.contains(currentToken->getText())) {
             symbolSet.emplace(currentToken->getText());
+            emit->headerLine("float " + currentToken->getText() + ";");
         }
+        emit->emit(currentToken->getText() + " = ");
         match(ident);
         match(EQ);
         expression();
+        emit->emitLine(";");
         break;
     case INPT:
         std::cout << "STATEMENT: INPUT" << std::endl;
         nextToken();
         if(!symbolSet.contains(currentToken->getText())) {
             symbolSet.emplace(currentToken->getText());
+            emit->headerLine("float " + currentToken->getText() + ";");
         }
+        //emit scanf but also handle invalid input by setting it to 0
+        emit->emitLine(std::string() + "if(0 == scanf(\"%" + "f\", &" + currentToken->getText() + ")) {");
+        emit->emitLine(currentToken->getText() + " = 0;");
+        emit->emit("scanf(\"%");
+        emit->emitLine("*s\");");
+        emit->emitLine("}");
         match(ident);
         break;
     default:
@@ -151,6 +179,7 @@ void Parser::comparison() {
     expression();
 
     if(isComparisonOperator()) {
+        emit->emit(currentToken->getText());
         nextToken();
         expression();
     }
@@ -159,6 +188,7 @@ void Parser::comparison() {
     }
 
     while(isComparisonOperator()) {
+        emit->emit(currentToken->getText());
         nextToken();
         expression();
     }
@@ -170,6 +200,7 @@ void Parser::expression() {
     term();
     //can have 0 or more next things
     while(checkToken(PLUS) || checkToken(MINUS)) {
+        emit->emit(currentToken->getText());
         nextToken();
         term();
     }
@@ -180,6 +211,7 @@ void Parser::term() {
 
     unary();
     while(checkToken(ASTERISK) || checkToken(SLASH)) {
+        emit->emit(currentToken->getText());
         nextToken();
         unary();
     }
@@ -190,6 +222,7 @@ void Parser::unary() {
 
     //Optional Unary +/-
     if(checkToken(PLUS) || checkToken(MINUS)) {
+        emit->emit(currentToken->getText());
         nextToken();
     }
     primary();
@@ -199,12 +232,14 @@ void Parser::primary() {
     std::cout << "PRIMARY (" + currentToken->getText() + ")" << std::endl;
 
     if(checkToken(number)) {
+        emit->emit(currentToken->getText());
         nextToken();
     }
     else if(checkToken(ident)) {
         if(!symbolSet.contains(currentToken->getText())) {
             abort("Referencing variable before assignment: " + currentToken->getText());
         }
+        emit->emit(currentToken->getText());
         nextToken();
     }
     else {

@@ -17,6 +17,8 @@ if(Boost_FOUND)
                 Lexer/TokenType.h
                 Parser/Parser.cpp
                 Parser/Parser.h
+                Emitter/Emitter.cpp
+                Emitter/Emitter.h
         )
         target_link_libraries(remark ${Boost_LIBRARIES})
 endif()

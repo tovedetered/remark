@@ -77,6 +77,13 @@ build CMakeFiles/remark.dir/Parser/Parser.cpp.o: CXX_COMPILER__remark_unscanned_
   OBJECT_DIR = CMakeFiles/remark.dir
   OBJECT_FILE_DIR = CMakeFiles/remark.dir/Parser
 
+build CMakeFiles/remark.dir/Emitter/Emitter.cpp.o: CXX_COMPILER__remark_unscanned_Debug /home/tobedetered/CLionProjects/remark/Emitter/Emitter.cpp || cmake_object_order_depends_target_remark
+  DEFINES = -DBOOST_SERIALIZATION_DYN_LINK -DBOOST_SERIALIZATION_NO_LIB
+  DEP_FILE = CMakeFiles/remark.dir/Emitter/Emitter.cpp.o.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/remark.dir
+  OBJECT_FILE_DIR = CMakeFiles/remark.dir/Emitter
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target remark
@@ -85,7 +92,7 @@ build CMakeFiles/remark.dir/Parser/Parser.cpp.o: CXX_COMPILER__remark_unscanned_
 #############################################
 # Link the executable remark
 
-build remark: CXX_EXECUTABLE_LINKER__remark_Debug CMakeFiles/remark.dir/main.cpp.o CMakeFiles/remark.dir/Lexer/Lexer.cpp.o CMakeFiles/remark.dir/Lexer/Token.cpp.o CMakeFiles/remark.dir/Parser/Parser.cpp.o | /usr/local/lib/libboost_serialization.so.1.82.0
+build remark: CXX_EXECUTABLE_LINKER__remark_Debug CMakeFiles/remark.dir/main.cpp.o CMakeFiles/remark.dir/Lexer/Lexer.cpp.o CMakeFiles/remark.dir/Lexer/Token.cpp.o CMakeFiles/remark.dir/Parser/Parser.cpp.o CMakeFiles/remark.dir/Emitter/Emitter.cpp.o | /usr/local/lib/libboost_serialization.so.1.82.0
   FLAGS = -g
   LINK_LIBRARIES = -Wl,-rpath,/usr/local/lib  /usr/local/lib/libboost_serialization.so.1.82.0
   OBJECT_DIR = CMakeFiles/remark.dir

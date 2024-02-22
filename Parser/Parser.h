@@ -7,12 +7,13 @@
 #include <iostream>
 #include <unordered_set>
 
+#include "../Emitter/Emitter.h"
 #include "../Lexer/Lexer.h"
 
 
 class Parser {
 public:
-    explicit Parser(Lexer* lex);
+    explicit Parser(Lexer* lex, Emitter* emit);
     ~Parser();
     [[nodiscard]] bool checkToken(TokenType token) const;
     [[nodiscard]] bool checkPeek(TokenType token) const;
@@ -37,6 +38,7 @@ private:
     Token* currentToken;
     Token* peekToken;
     Lexer* lex;
+    Emitter* emit;
 
     std::unordered_set<std::string> symbolSet; //Vairables
     std::unordered_set<std::string> labels;

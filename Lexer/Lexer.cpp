@@ -145,7 +145,7 @@ Token* Lexer::getToken() {
             nextChar();
             length ++;
         }
-        std::string tokenText = source.substr(startPos, length);
+        std::string tokenText = source.substr(startPos, length - 1);
         token = new Token(tokenText, strlit);
         break;
     }
