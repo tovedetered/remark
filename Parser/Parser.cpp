@@ -42,7 +42,6 @@ void Parser::nextToken() {
 }
 
 void Parser::program() {
-    std::cout << "PROGRAM" << std::endl;
 
     emit->headerLine("#include <stdio.h>");
     emit->headerLine("int main(void){");
@@ -73,7 +72,6 @@ void Parser::statement() {
     switch (currentToken->getToken()) {
     case PRNT:
         //prnt (statement|strlit) end
-        std::cout << "STATEMENT: PRINT" << std::endl;
         nextToken();
         if(checkToken(strlit)) {
             //Simple String
@@ -89,7 +87,6 @@ void Parser::statement() {
         break;
     case IF:
         //"IF" comparison "BEGIN" {statement} "END"
-        std::cout << "STATEMENT: IF" << std::endl;
         nextToken();
         emit->emit("if(");
         comparison();
@@ -104,7 +101,6 @@ void Parser::statement() {
         break;
     case WHILE:
         //"WHILE" comparison "BEGIN" "ENDLNE" {statement} ("END" | "ENDLNE") "ENDLNE"
-        std::cout << "STATEMENT: WHILE" << std::endl;
         nextToken();
         emit->emit("while(");
         comparison();
@@ -119,7 +115,6 @@ void Parser::statement() {
         break;
     case LBL:
         //lbl ident
-        std::cout << "STATEMENT: LABEL" << std::endl;
         nextToken();
         if(labels.contains(currentToken->getText())) {
             abort("Label already exists: " + currentToken->getText());
@@ -130,14 +125,12 @@ void Parser::statement() {
         break;
     case GOTO:
         //goto ident
-        std::cout << "Statement: GOTO" << std::endl;
         nextToken();
         labelsGoneTo.emplace(currentToken->getText());
         emit->emitLine("goto " + currentToken->getText() + ";");
         match(ident);
         break;
     case LET:
-        std::cout << "STATEMENT: LET" << std::endl;
         nextToken();
         if(!symbolSet.contains(currentToken->getText())) {
             symbolSet.emplace(currentToken->getText());
@@ -150,7 +143,6 @@ void Parser::statement() {
         emit->emitLine(";");
         break;
     case INPT:
-        std::cout << "STATEMENT: INPUT" << std::endl;
         nextToken();
         if(!symbolSet.contains(currentToken->getText())) {
             symbolSet.emplace(currentToken->getText());
@@ -174,7 +166,6 @@ void Parser::statement() {
 
 //expression (("==" | "!=" | ">" | ">=" | "<" | "<=") expression)+
 void Parser::comparison() {
-    std::cout << "COMPARISON" << std::endl;
 
     expression();
 
@@ -195,7 +186,6 @@ void Parser::comparison() {
 }
 
 void Parser::expression() {
-    std::cout << "EXPRESSION" << std::endl;
 
     term();
     //can have 0 or more next things
@@ -207,7 +197,6 @@ void Parser::expression() {
 }
 
 void Parser::term() {
-    std::cout << "TERM" << std::endl;
 
     unary();
     while(checkToken(ASTERISK) || checkToken(SLASH)) {
@@ -218,7 +207,6 @@ void Parser::term() {
 }
 
 void Parser::unary() {
-    std::cout << "UNARY" << std::endl;
 
     //Optional Unary +/-
     if(checkToken(PLUS) || checkToken(MINUS)) {
@@ -229,7 +217,6 @@ void Parser::unary() {
 }
 
 void Parser::primary() {
-    std::cout << "PRIMARY (" + currentToken->getText() + ")" << std::endl;
 
     if(checkToken(number)) {
         emit->emit(currentToken->getText());
@@ -248,7 +235,6 @@ void Parser::primary() {
 }
 
 void Parser::endLine() {
-    std::cout << "END LINE" << std::endl;
 
     match(ENDLNE);
 

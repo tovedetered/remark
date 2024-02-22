@@ -9,6 +9,7 @@
 
 int main() {
     std::cout << "***** Remarkable Compiler *****" << std::endl;
+    std::cout << "Please enter the path to the file you would like to compile!" << std::endl;
     std::string filepath;
     std::cin >> filepath;
 
@@ -41,8 +42,11 @@ int main() {
     }
     inputFile.close();
 
+    std::string outFile;
+    std::cout << "Please enter the output path and filename for your compiled program!" << std::endl;
+    std::cin >> outFile;
     Lexer lex(source);
-    Emitter emitter("out.c");
+    Emitter emitter(outFile);
     Parser pars(&lex, &emitter);
 
     pars.program();
