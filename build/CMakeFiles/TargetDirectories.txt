@@ -1,3 +1,0 @@
-/home/tobedetered/CLionProjects/remark/build/CMakeFiles/remark.dir
-/home/tobedetered/CLionProjects/remark/build/CMakeFiles/edit_cache.dir
-/home/tobedetered/CLionProjects/remark/build/CMakeFiles/rebuild_cache.dir
