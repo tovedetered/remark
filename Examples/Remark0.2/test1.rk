@@ -1,0 +1,14 @@
+print "Hello There, please put in a number!";
+input inum;
+
+if inum > 5 {
+    print "your number is greater than five!";
+};
+elseif inum == 5 {
+    print "your number is five!"!
+};
+else {
+    print "your number is less than five!";
+};
+
+print "Program Finished!";

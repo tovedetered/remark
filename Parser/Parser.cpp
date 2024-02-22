@@ -98,6 +98,35 @@ void Parser::statement() {
         }
         match(END);
         emit->emitLine("}");
+        nextToken();
+        ELSECHAIN:
+        if(currentToken->getToken() == ELSE) {
+            nextToken();
+            emit->emitLine("else{");
+            match(BEGIN);
+            while (!checkToken(END)) {
+                statement();
+            }
+            match(END);
+            emit->emitLine("}");
+        }
+        else if(currentToken->getToken() == ELSEIF) {
+            nextToken();
+            emit->emit("else if(");
+            comparison();
+
+            match(BEGIN);
+            emit->emitLine("){");
+            while(!checkToken(END)) {
+                statement();
+            }
+            match(END);
+            emit->emitLine("}");
+        }
+        if(peekToken->getToken() == ELSE || peekToken->getToken() == ELSEIF) {
+            nextToken();
+            goto ELSECHAIN;
+        }
         break;
     case WHILE:
         //"WHILE" comparison "BEGIN" "ENDLNE" {statement} ("END" | "ENDLNE") "ENDLNE"

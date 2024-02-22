@@ -45,6 +45,9 @@ int main() {
     std::string outFile;
     std::cout << "Please enter the output path and filename for your compiled program!" << std::endl;
     std::cin >> outFile;
+    if(outFile == "pDir") {
+        outFile = "out.c";
+    }
     Lexer lex(source);
     Emitter emitter(outFile);
     Parser pars(&lex, &emitter);
